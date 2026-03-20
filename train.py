@@ -82,14 +82,14 @@ def evaluate_metrics(t0: float, t1: float, mileage: list, price: list):
 	preds = [t0 + t1 * xi for xi in mileage]
 	errors = [preds[i] - price[i] for i in range(m)]
 
-	ss_res = sum(e * e for e in errors)
-	mse = ss_res / m
+	resSumSquares = sum(e * e for e in errors)
+	mse = resSumSquares / m
 	rmse = math.sqrt(mse)
 	mae = sum(abs(e) for e in errors) / m
 
-	y_mean = sum(price) / m
-	ss_tot = sum((yi - y_mean) ** 2 for yi in price)
-	r2 = 1 - ss_res / ss_tot if ss_tot != 0 else float('nan')
+	mean = sum(price) / m
+	SumSquares = sum((yi - mean) ** 2 for yi in price)
+	r2 = 1 - resSumSquares / SumSquares if SumSquares != 0 else float('nan')
 
 	print("Precision metrics:")
 	print(f"	MSE : {mse:.0f}")
@@ -135,7 +135,7 @@ def main():
 		dataset = pd.read_csv(sys.argv[1])
 		print("Loading dataset...")
 	except (FileNotFoundError, PermissionError, ValueError):
-		print("Please load with a propoer csv.")
+		print("Please load with a proper csv.")
 		sys.exit(-1)
 	theta0, theta1 = gradient_descent(dataset)
 	evaluate_metrics(theta0, theta1, dataset["km"].astype(float).tolist(), dataset["price"].astype(float).tolist())
