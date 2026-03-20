@@ -25,7 +25,7 @@ def main():
 		print("Please respect the format: ./estimatePrice mileage (mileage is an int >0)")
 		sys.exit(-1)
 	mileage = int(sys.argv[1])
-	if (mileage > 396691):
+	if (mileage > 395000):
 		print("Do not even try to sell your care. It's value is zero.")
 		sys.exit(-1)
 	theta0, theta1 = get_thetas()
